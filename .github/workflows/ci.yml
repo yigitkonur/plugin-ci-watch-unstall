@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: syntax checks
+        run: |
+          python3 -m py_compile ci-watch/skills/ci-watch/scripts/ci-watch.py
+          bash -n ci-watch/hooks/scripts/remind-ci-watch.sh tests/*.sh
+          jq -e . ci-watch/.claude-plugin/plugin.json .claude-plugin/marketplace.json ci-watch/hooks/hooks.json >/dev/null
+      - name: manifest sanity
+        run: |
+          test "$(jq -r .name ci-watch/.claude-plugin/plugin.json)" = ci-watch
+          jq -e '.hooks.PostToolUse[0].hooks[0].command | test("CLAUDE_PLUGIN_ROOT")' ci-watch/hooks/hooks.json >/dev/null
+          jq -e '.plugins[0].source == "./ci-watch"' .claude-plugin/marketplace.json >/dev/null
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: harness smoke suite
+        run: bash tests/smoke.sh
+      - name: hook matcher suite
+        run: bash tests/hook.sh
