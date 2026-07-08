@@ -64,8 +64,9 @@ check `/tasks`, investigate, re-arm.
   its own `CI-DONE timeout` instead of being silently killed.
 - Only need the final verdict (docs-only push, end of session)? Run the same
   command via Bash `run_in_background: true` instead of Monitor — one
-  completion notification. Pipelines >10 min: verify the background task
-  isn't killed by the Bash timeout cap; if unsure, prefer Monitor.
+  completion notification. Background tasks are not subject to the 10-min
+  foreground Bash cap (verified empirically), so this is safe for long
+  pipelines; the harness's `--deadline-min` is still the deadline that counts.
 - Judging **PR mergeability** (required checks incl. third-party) rather than
   branch CI: build a `--cmd` probe from `gh pr checks <pr> --json name,bucket`
   — `bucket=="fail"` ⇒ failure line; all non-pending ⇒ TERMINAL.
