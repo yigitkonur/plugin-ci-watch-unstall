@@ -1,0 +1,13 @@
+{
+  "name": "unstall",
+  "owner": {
+    "name": "Yigit Konur"
+  },
+  "plugins": [
+    {
+      "name": "ci-watch",
+      "source": "./ci-watch",
+      "description": "Monitor-tool CI/CD watching: diff-gated harness, push-triggered reminder hook, reaction playbook"
+    }
+  ]
+}

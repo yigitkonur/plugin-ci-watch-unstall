@@ -1,0 +1,9 @@
+{
+  "name": "ci-watch",
+  "version": "0.1.0",
+  "description": "Never stall on CI again: Monitor-tool CI/CD watching with a diff-gated harness, a push-triggered reminder hook, and a reaction playbook",
+  "author": {
+    "name": "Yigit Konur"
+  },
+  "keywords": ["ci", "cd", "github-actions", "monitor", "watcher"]
+}
