@@ -21,12 +21,16 @@ sha=$(git rev-parse HEAD); branch=$(git branch --show-current)
 
 ```
 Monitor({
-  command: "python3 ${CLAUDE_PLUGIN_ROOT}/skills/ci-watch/scripts/ci-watch.py --gh <sha> --branch <branch> --deadline-min 30",
+  command: "GH_REPO=<owner>/<repo> python3 ${CLAUDE_PLUGIN_ROOT}/skills/ci-watch/scripts/ci-watch.py --gh <sha> --branch <branch> --deadline-min 30",
   description: "CI <branch>@<sha7>",
   persistent: false,
   timeout_ms: 1980000   // always (deadline-min + 3) * 60000; deadline-min max ~55
 })
 ```
+
+Always set `GH_REPO` — the harness runs from the session's cwd, which may not
+be the repo you pushed (worktrees, multi-repo sessions). `gh repo view
+--json nameWithOwner -q .nameWithOwner` gives the value.
 
 This watches **all workflows** triggered by that SHA (one run green while
 another fails elsewhere = still failure), and self-exits `superseded` if the
