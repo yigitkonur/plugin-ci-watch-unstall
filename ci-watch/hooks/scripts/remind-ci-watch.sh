@@ -15,6 +15,7 @@ if printf '%s' "$cmd" | grep -qE 'git push|gh run rerun|gh workflow run'; then
   if printf '%s' "$cmd" | grep -qE 'git push[^|;&]*(--dry-run|--delete|[[:space:]]-d[[:space:]])'; then
     exit 0
   fi
-  printf '%s' '{"suppressOutput":true,"systemMessage":"CI was likely just triggered. If the command succeeded, arm the watch NOW via the ci-watch skill (pin the SHA first: git rev-parse HEAD) and keep working while events arrive. Never watch CI in foreground Bash or with gh run watch / gh pr checks --watch."}'
+  # additionalContext reaches the model; systemMessage would only reach the user
+  printf '%s' '{"suppressOutput":true,"hookSpecificOutput":{"hookEventName":"PostToolUse","additionalContext":"CI was likely just triggered. If the command succeeded, arm the watch NOW via the ci-watch skill (pin the SHA first: git rev-parse HEAD) and keep working while events arrive. Never watch CI in foreground Bash or with gh run watch / gh pr checks --watch."}}'
 fi
 exit 0

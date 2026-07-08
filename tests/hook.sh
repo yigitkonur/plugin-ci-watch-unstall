@@ -11,7 +11,7 @@ expect() { # name should_fire json
   local fired=no; [ -n "$out" ] && fired=yes
   if [ "$fired" != "$want" ]; then
     echo "FAIL [$name] fired=$fired want=$want"; fails=$((fails+1))
-  elif [ "$fired" = yes ] && ! jq -e '.systemMessage | test("ci-watch skill")' <<<"$out" >/dev/null; then
+  elif [ "$fired" = yes ] && ! jq -e '.hookSpecificOutput.additionalContext | test("ci-watch skill")' <<<"$out" >/dev/null; then
     echo "FAIL [$name] fired but message malformed: $out"; fails=$((fails+1))
   else
     echo "ok   [$name]"
