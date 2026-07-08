@@ -14,12 +14,12 @@ blocking — and reminds them to arm the watch the moment they push.
 
 ## Install
 
-Registered as a local marketplace:
+The marketplace manifest lives one level up (repo root):
 
 ```bash
-# marketplace.json lives one level up (/opt/nvme/utils/claude-plugins/)
-claude  # then: /plugin marketplace add /opt/nvme/utils/claude-plugins
-        #       /plugin install ci-watch@local-utils
+claude  # then: /plugin marketplace add yigitkonur/plugin-ci-watch-unstall
+        #       /plugin install ci-watch@unstall
+# (or add the local clone path instead of the GitHub slug)
 ```
 
 Hooks load at session start — restart sessions after install/update.
