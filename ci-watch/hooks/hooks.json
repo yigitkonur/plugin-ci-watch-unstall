@@ -1,0 +1,17 @@
+{
+  "description": "Reminds the agent to arm a ci-watch Monitor after CI-triggering commands (git push, gh run rerun, gh workflow run)",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/remind-ci-watch.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
