@@ -3,6 +3,10 @@ name: ci
 on:
   push:
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -27,3 +31,9 @@ jobs:
         run: bash tests/smoke.sh
       - name: hook matcher suite
         run: bash tests/hook.sh
+
+  soak:
+    # DRILL-ONLY: slows CI so heartbeat/CI-CHG/supersession can be observed live. Remove after.
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 300
