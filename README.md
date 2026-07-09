@@ -130,6 +130,12 @@ still running. the watch is the agent's, but the visibility is yours.
   that's by design; the agent stays in the loop and owns the reaction.
 - one watch per pushed sha. re-push → old watch supersedes itself → arm a
   fresh one.
+- developing this plugin? add the marketplace from *outside* your local
+  checkout — use the repo shorthand above from any other directory. adding it
+  from inside the cloned repo makes claude code resolve the source to your
+  working directory and mis-join the path (you'll see `marketplace file not
+  found at .../<owner>-<repo>/<your-cwd>`). a fresh clone is always clean;
+  end users are unaffected.
 
 built because we got tired of agents holding their breath. mit licensed,
 issues and probes for other providers welcome.
